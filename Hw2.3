@@ -1,0 +1,82 @@
+classDiagram
+class Character {
+# string name
+# int health
+# int attack
+# int defense
+# int speed
+# Team *team
++ Character(const string & name, int health, int attack, int defense, int speed, Team *team)
++ void takeDamage(int damage)
++ virtual void performAction(Character *target) = 0
+}
+class Player {
+- int level
+- vector~Item *~ inventory
++ Player(const string & name, int health, int attack, int defense, int speed, Team *team, int level, const vector~Item *~ & inventory)
++ void performAction(Character *target)
++ void useItem(Item *item, Character *target)
+}
+class Monster {
+- vector~Item *~ loot
++ Monster(const string & name, int health, int attack, int defense, int speed, Team *team, const vector~Item *~ & loot)
++ void performAction(Character *target)
+}
+class Item {
+- string name
+- int effectValue
+- int targetType
++ Item(const string & name, int effectValue, int targetType)
++ void applyEffect(Character *target)
+}
+class Battle {
+- Team *team1
+- Team *team2
++ Battle(Team *team1, Team *team2)
++ void startBattle()
++ bool isBattleOver()
++ Character *getFastestCharacter()
+}
+class Team {
+- vector~Character *~ members
+- string teamName
++ Team(const vector~Character *~ & members, const string & teamName)
++ void addMember(Character *character)
++ bool isDefeated()
+}
+class GameManager {
+- vector~Player *~ players 
+- vector~Monster *~ monsters
+- vector~Item *~ itemPool
+- vector~Battle *~ battles
++ GameManager(const vector~Player *~ & players, const vector~Monster *~ & monsters, const vector~Item *~ & itemPool, const vector~Battle *~ & battles)
++ void initializeGame()
++ void startBattle(Team *playerTeam, Team *monsterTeam)
+}
+%% Inheritance Relationships
+Character <|-- Player
+Character <|-- Monster
+%% Composition Relationships (*--): Lifecycle-dependent ownership
+Team o-- Character : has
+GameManager *-- Battle : manages
+GameManager *-- Item : manages
+%% Aggregation Relationships (o--): One-to-many, independent lifecycle
+Player o-- Item : has
+Monster o-- Item : drops
+Battle o-- Team : requires
+%% Dependency Relationships (..>): Usage without ownership
+Player ..> Team : belongs to
+Monster ..> Team : belongs to
+Player ..> Item : uses
+Player ..> Character : targets
+Monster ..> Character : targets
+Item ..> Character : applies to
+Battle ..> Character : retrieves
+GameManager ..> Team : uses
+GameManager ..> Battle : starts
+GameManager ..> Item : distributes
+GameManager ..> Player : controls
+GameManager ..> Monster : manages
+Team ..> Character : manages
+Character ..> Team : belongs to
+%%Character ..> Character : interacts with
