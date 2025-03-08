@@ -1,0 +1,30 @@
+Comparison & Evaluation:
+  The difference in the number of classes and relationships between DeepSeek and my UML diagram is not extreme. 
+  DeepSeek created more classes and used significantly more composition than I did. Also, the descriptions of the relationships are more thorough as they include describing words and cardinality.
+  The AI's UML seemed to capture all required details, however, there is no overarching façade class in DeepSeeks version that would enable easy operation. 
+  From a broad scope, the AI version and mine seem to share an apparent overarching theme with implementation. Although DeepSeeks is easier to read, it is clear that we both were (attempting to) apply SOLID and 
+  design patterns.
+
+Design Choices & Engineering Considerations:
+  I attempted to be as atomic as possible. However, I struggled, and still struggle, to understand when to split something. Are reports connected to logs? Are reports connected to Members? If both, are they part of the same report class?
+  Looking back at my diagram, I see that the search function needs to be in its own class and many parts of the bookSystem class. I also tended toward aggregation instead of composition, and this is because when picturing this library system, I imagined physical things
+  continue existing even without the book system.
+
+  The AI's design is very similar to mine. The most significant differences are higher precision in classes and more thorough functions and member variables. I believe I could have made the AI's design, if not better, with enough time and more brainstorming 
+  like we did for workshop 3, I could capture more of the picture.
+
+Iterating on AI's Output:
+  I did not exactly modify the AI's output, as I deliberately organized the prompts to clarify what I intended before producing the code. This proved to be an effective method for producing desirable results with less modification.\
+  If I were to modify my diagram after having worked with the AI's output, I would definitely split the classes further and format the classes in the way the AI does, as it is more readable and visually appealing.
+  Crafting a more specific set of requirements and specifications would allow me to refine exactly what to give the AI meaning a more accurate and refined model.
+
+Broader AI & Software Engineering Questions
+  AI-assisted UMl generation could help developers form a more complete picture faster. With AI's massive datasets, specifics to a certain project that a developer might lack can be supplemented, to a certain degree, allowing for 
+  less disconnect between client and developer, which would allow for faster development and fewer issues within the requirement, specification, and design parts of the development process. 
+
+  The AI UML diagram shortcomings are similar to my own. Neither of our diagrams has good ways to handle long-term data or ways to represent this. This means that recommendations, logs, and reports have ambiguity and lack function.
+  At some point in the future, I imagine AI becoming either a critical tool or fully automating certain parts of the design process. Still, at our current stage, I do not believe AI could produce on a large scale with enough detail and precision
+  that is necessary for massive projects. 
+  
+
+  
