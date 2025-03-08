@@ -1,0 +1,129 @@
+classDiagram
+    %% User Classes
+    class User {
+        <<Abstract>>
+        +String userID
+        +String name
+        +String email
+        +String password
+        +String role
+        +login()
+        +logout()
+    }
+
+    class LibraryMember {
+        +List~Book~ borrowedBooks
+        +List~Book~ reservedBooks
+        +borrowBook(Book)
+        +returnBook(Book)
+        +reserveBook(Book)
+        +searchBook(String criteria)
+    }
+
+    class Librarian {
+        +addBook(Book)
+        +removeBook(Book)
+        +manageInventory()
+        +approveRequest(Book)
+    }
+
+    class Administrator {
+        +addUser(User)
+        +removeUser(User)
+        +modifyPolicy(String policy)
+        +generateReport()
+    }
+
+    User <|-- LibraryMember
+    User <|-- Librarian
+    User <|-- Administrator
+
+    %% Book Classes
+    class Book {
+        <<Abstract>>
+        +String bookID
+        +String title
+        +String author
+        +String ISBN
+        +String genre
+        +int publicationYear
+        +boolean availabilityStatus
+        +checkAvailability()
+    }
+
+    class PhysicalBook {
+        +int totalCopies
+        +int availableCopies
+        +updateCopies(int delta)
+    }
+
+    class EBook {
+        +int totalLicenses
+        +int availableLicenses
+        +updateLicenses(int delta)
+    }
+
+    Book <|-- PhysicalBook
+    Book <|-- EBook
+
+    %% Borrowing and Reservations
+    class Borrowing {
+        +String borrowingID
+        +String userID
+        +String bookID
+        +Date borrowDate
+        +Date dueDate
+        +Date returnDate
+        +double lateFee
+        +calculateLateFee()
+    }
+
+    class Reservation {
+        +String reservationID
+        +String userID
+        +String bookID
+        +Date reservationDate
+        +String status
+        +notifyUser()
+    }
+
+    %% Search and Recommendations
+    class Search {
+        +searchByTitle(String title)
+        +searchByAuthor(String author)
+        +searchByGenre(String genre)
+        +searchByAvailability(boolean status)
+    }
+
+    class Recommendation {
+        +generateRecommendations(User user)
+    }
+
+    %% Reports and Logging
+    class Report {
+        <<Singleton>>
+        +generateMostBorrowedReport()
+        +generateOverdueReport()
+        +generateUserActivityReport()
+    }
+
+    class Log {
+        <<Singleton>>
+        +String logID
+        +String userID
+        +String activity
+        +Date timestamp
+        +logActivity(String activity)
+    }
+
+    %% Relationships
+    LibraryMember "1" *-- "0..*" Book : borrows
+    LibraryMember "1" *-- "0..*" Book : reserves
+    Librarian "1" *-- "0..*" Book : manages
+    Administrator "1" *-- "0..*" User : manages
+    Borrowing "1" *-- "1" Book : borrows
+    Borrowing "1" *-- "1" LibraryMember : borrowed by
+    Reservation "1" *-- "1" Book : reserves
+    Reservation "1" *-- "1" LibraryMember : reserved by
+    Search "1" *-- "0..*" Book : searches
+    Recommendation "1" *-- "1" LibraryMember : recommends
