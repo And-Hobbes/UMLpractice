@@ -1,0 +1,119 @@
+classDiagram
+    class iHuman {
+        <<Abstract>>
+        #String name
+        #String email
+        #String password
+        +login()
+        +logout()
+    }
+
+    iHuman <|-- LibraryMembers
+    class LibraryMembers {
+        -List~Books~ loanedBooks
+        -int fees
+        -int limit
+        -List~Books~ bookHistory
+        +searchBooks(List~String~ keywords) List~Books~
+        +borrowBook(Books book) bool
+        +returnBook(Books book) bool
+        +updateFees(int fees)
+        +reserveBook(Books book) bool
+        +updateHistory(Books book)
+    }
+
+    iHuman <|-- iStaff
+    note for iStaff "Adhereing to SOLID: I"
+    class iStaff {
+        <<Abstract>>
+        #int employeeID
+    }
+
+    iStaff <|-- Librarians
+    class Librarians {
+        +addBook(Books book) bool
+        +removeBook(Books book) bool
+        +approveRequest(Request request) bool
+        +manageInventory()
+    }
+
+    iStaff <|-- Administrators
+    class Administrators {
+        +deleteUser(iHuman person) bool
+        +addUser(iHuman person) bool
+        +adjustLoanDuration(int days)
+        +generateReport(ReportType type) Report
+    }
+
+    class Books {
+        <<Abstract>>
+        #String title
+        #String author
+        #String ISBN
+        #String genre
+        #int publicationYear
+        #bool isAvailable
+        #int checkouts
+        +checkAvailability() bool
+    }
+
+    Books <|-- PhysicalBooks
+    class PhysicalBooks {
+        -bool isHardCover
+        -int daysTillDue
+    }
+
+    Books <|-- eBooks
+    note for eBooks "E-books are removed automatically"
+    class eBooks {
+        -int daysTillRemoval
+    }
+
+    class Report {
+        <<Abstract>>
+        +generate() String
+    }
+
+    class BorrowedReport {
+        +generate() String
+        +getMostBorrowedBooks() List~Books~
+    }
+
+    class OverdueReport {
+        +generate() String
+        +getOverdueBooks() List~Books~
+    }
+
+    Report <|-- BorrowedReport
+    Report <|-- OverdueReport
+
+    LibraryMembers *-- Books 
+    Librarians *-- Books 
+    Administrators --> Report 
+
+    class BookSystem {
+        <<Singleton>>
+        -List~Books~ availableBooks
+        -List~Books~ checkedOutBooks
+        +updateDueDates() List~Books~
+        +calculateLateFees(List~Books~) int
+        +updateUserFees(iHuman person)
+        +generateRecommendations(LibraryMembers member) List~Books~
+        +updateAvailableBooks(Books book)
+        +updateWaitingList()
+        +updateBorrowAndReturnLog(DataBase database)
+    }
+
+    BookSystem o-- Books
+    BookSystem o-- DataBase
+
+    class DataBase {
+        -List~Books~ bookHistory
+        -List~Logs~ activityLogs
+        +updateDataBase()
+        +addLog(Log log)
+    }
+
+    BookSystem -- LibraryMembers
+    BookSystem -- Administrators
+    BookSystem ..> Librarians
