@@ -1,0 +1,89 @@
+classDiagram
+    class iHuman{
+        #name: String
+        
+
+
+    }
+    iHuman <|-- Library Members
+    class Library Members{
+        -loanedBooks: List~Books~
+        -fees: int
+        -limit: int
+        -bookHistory: List~Books~
+        +searchBooks(List~String~ keywords)
+        +returnBooks(Books book)
+        +updateFees(int fees)
+        +reserveBook(Books book)
+        +updateHistory(Books book)
+    }
+    iHuman <|-- iStaff
+    note for iStaff "This seems helpful for SOLID" 
+    class iStaff    {
+        #employeeID: int
+        
+
+    }
+    iStaff <|-- Librarians
+    class Librarians{
+        +addBooks(Books book)
+        +removeBooks(Books book)
+        +approveRequest(Request request): bool
+    }
+    iStaff <|-- Administrators
+    note for Administrators "really Report should be its own class but this is going to get very large if i do everything"
+    class Administrators{
+        +deleteUsers(iHuman person) bool
+        +addUsers(iHuman person) bool
+        +adjustDuration()
+        +generateReport() String 
+    }
+
+    class Books{
+        #Title: String
+        #Author: String
+        #ISBN: int
+        #genre: String
+        #publicationyear: int
+        #isAvailable: bool
+        #checkouts: int
+
+
+    }
+    Books <|-- PhysicalBooks
+    class PhysicalBooks{
+        -isHardCover: bool
+        -daysTillDue: int
+    }
+    Books <|-- eBooks
+    note for eBooks "I can't think anything for this"
+    class eBooks{
+        -daysTillRemoval: int
+    }
+    LibraryMembers o-- Books
+    bookSystem o-- Books
+    
+    class bookSystem{
+        -availableBooks: List~Books~
+        -checkedoutBooks: list~Books~
+        +updateDueDates() list~Books~
+        +calculateLateFees(list~Books~)
+        +updateUserFees(iHuman person)
+        +generateRecommendations(LibraryMembers member) String
+        +updateAvailableBooks(Books book)
+        +updateWaitingPeople() 
+        +generateBorrowedReport() file
+        +generateOverDueReport() file
+        +updateBorrowandReturnLog(DataBase database)
+    }
+    bookSystem o-- DataBase
+    note for DataBase "How do Databases get represented in UML"
+    class DataBase{
+        -bookHistory: DataBase
+        +updateDataBase()
+    }
+    
+    bookSystem -- LibraryMembers
+    bookSystem -- Administrators
+    bookSystem ..> Librarians
+
