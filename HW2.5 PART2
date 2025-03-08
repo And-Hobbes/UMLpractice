@@ -1,0 +1,8 @@
+I used DeepSeek. I started by giving it simply the requirements, then told it to form a plan for the uml before writing it so i could update it,  then approved it to make the uml after reminding it to follow solid design principles. 
+First Prompt was exactly the Problem description
+
+Second Prompt was: " this looks great, i am going to make a uml diagram in mermaid. would you help me with this? why don't we start by first having you go through what you think this should be composed of,
+much like you do for deep research, allowing me to view the plan and make tweaks before actually making the UML code." 
+
+Third Prompt was: "i like this, you should be good to make the code, make sure to remember the SOLID design principles and use design patterns when possible"
+
