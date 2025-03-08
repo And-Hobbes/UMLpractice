@@ -1,0 +1,56 @@
+classDiagram
+    class Student {
+        -name: String
+        -email: String
+        -hackathonsJoined: List<Hackathon>
+        +register(hackathon: Hackathon)
+        +joinTeam(team: Team)
+        +vote(project: Project)
+    }
+
+    class Team {
+        -name: String
+        -members: List<Student>
+        -submission: Project
+        +addMember(student: Student)
+        +submitProject(project: Project)
+    }
+
+    class Project {
+        -title: String
+        -description: String
+        -githubLink: String
+        -votes: List<Student>
+        +addVote(student: Student)
+    }
+
+    class Hackathon {
+        -name: String
+        -date: String
+        -participants: List<Student>
+        -teams: List<Team>
+        -projects: List<Project>
+        -judges: List<Judge>
+        +registerStudent(student: Student)
+        +registerTeam(team: Team)
+        +submitProject(project: Project)
+        +addJudge(judge: Judge)
+        +determineWinner()
+    }
+
+    class Judge {
+        -name: String
+        -email: String
+        -reviewedProjects: List<Project>
+        +reviewProject(project: Project, score: int)
+    }
+
+    Student "1" --* "many" Hackathon : joins
+    Hackathon "1" --* "many" Student : has participants
+    Hackathon "1" --* "many" Team : has teams
+    Hackathon "1" --* "many" Project : has projects
+    Hackathon "1" --* "many" Judge : has judges
+    Team "1" --* "many" Student : has members
+    Team "1" -- "1" Project : submits
+    Project "1" --* "many" Student : receives votes
+    Judge "1" --* "many" Project : reviews
