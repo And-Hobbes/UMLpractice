@@ -1,0 +1,28 @@
+Comparing these two models, it becomes clear that they both make rather significant errors. 
+Properties:
+  Both models include all the properties specified in the instructions. Gemini formatted the properties in the style we learned in class, placing the return type after the function definition.
+  If we compare these results to the other UML diagrams in the homework, both models messed up the list of hackathons individuals, meaning there is no type declaration for members. Chatgpt has made everything public, which is a significant oversight. 
+  Furthermore, Chatgpt added extra details to the judge's class.
+Class Structure and Abstractions:
+  Both models create separate team classes that store a list of members. Neither model recognized the need for a Registration class to link students to hackathons.
+  The lack of registration class cascades into the hackathon class where both store participants and teams, meaning we are double counting people.
+Data Types and Relationships:
+  Chatgpt's implementation of the votes variable is bizarre as it opts to hold each student who has voted in a list or something related to the student. 
+  Gemini's implementation of the votes variable makes sense as it simply uses an int.
+  Both models incorrectly implement the judge scoring system, leaving the score within the judge class without any connection elsewhere, which makes the score worthless.
+  Gemini's relationships were effectively non-existent as they didn't have any type.
+  Chatgpt's relationships are better as they exist, but the overreliance on composition instead of aggregation means removing individuals, teams, judges, and projects would not work correctly.
+Methods and Interactions:
+  Both models did very poorly in defining how functions would interact. Both AI's attempted in someway to create voting system however they are unclear in implementation.
+  Even worse than the failure of the voting system is the very underdeveloped nature of the team-forming system. Aside from the registration class, a team-forming class would also have been necessary to follow SOLID.
+  Judge scoring is nothing more than an afterthought in both models and is not even considered in either hackathon's declarations.
+FeedbackLoops and missing interactions:
+  Both AI's did not include any systems for active updates of anything related to the hackathon. Chatgpt did include a calculate winner function in the hackathon class.
+  Gemini does not attempt to prevent duplicate voting or voting for your own project. 
+  Chatgpt could arguably prevent duplicate voting as the voting system stores votes in a list, which could be students, and removes duplicates, although this is not clear.
+Compare and Contrast:
+  Comparatively, I see the different versions are relatively equal in their poor quality; ChatGPT fails to create private member variables, and Gemini fails to define relationships in any meaningful way.
+  Both models do cardinality, however, this is of less importance than their failures. This is especially clear to me as I am just learning UML, and it is obvious to me that I would be unable to follow these plans to fully complete the project.
+  
+  
+  
